@@ -1,0 +1,21 @@
+class MapManager{constructor(){this.mapData=JSON.parse(localStorage.getItem("mapData"))||[],this.map=null,this.currentMarker=null,this.init()}init(){this.initMap(),this.updateStats(),this.bindEvents()}initMap(){this.map=new BMap.Map("baiduMap");var e=new BMap.Point(120.161,30.279);this.map.centerAndZoom(e,12),this.map.enableScrollWheelZoom(!0),this.map.addControl(new BMap.NavigationControl),this.map.addControl(new BMap.ScaleControl),this.map.addControl(new BMap.OverviewMapControl),this.map.addEventListener("click",e=>{this.showAddLocationForm(e.point)}),this.renderMarkers()}renderMarkers(){this.mapData.forEach(e=>{let t=new BMap.Point(e.lng,e.lat);var a=new BMap.Marker(t);let n=new BMap.InfoWindow(this.createInfoWindowContent(e));a.addEventListener("click",()=>{this.map.openInfoWindow(n,t)}),this.map.addOverlay(a)})}createInfoWindowContent(e){return`
+            <div class="map-info-window">
+                <h4>${e.name}</h4>
+                <p class="info-date">${e.date}</p>
+                <p class="info-address">${e.address}</p>
+                ${e.description?`<p class="info-desc">${e.description}</p>`:""}
+                ${e.images&&0<e.images.length?`
+                    <div class="info-images">
+                        ${e.images.map(e=>`
+                            <img src="${e}" alt="照片" onclick="showLargeImage('${e}')">
+                        `).join("")}
+                    </div>
+                `:""}
+                <button onclick="deleteLocation('${e.id}')" class="delete-btn">删除</button>
+            </div>
+        `}showAddLocationForm(e){document.getElementById("mapModal").style.display="block",this.currentMarker=e,(new BMap.Geocoder).getLocation(e,e=>{e&&(document.getElementById("locationAddress").value=e.address)}),this.bindFormEvents()}bindFormEvents(){let i=document.getElementById("mapModal");var e=i.querySelector(".close-btn"),t=i.querySelector(".cancel-btn"),a=i.querySelector(".save-btn"),n=i.querySelector("#locationImages");let o=i.querySelector("#imagePreview");e.onclick=()=>i.style.display="none",t.onclick=()=>i.style.display="none",window.onclick=e=>{e.target===i&&(i.style.display="none")},n.onchange=e=>{o.innerHTML="",Array.from(e.target.files).forEach(e=>{var t=new FileReader;t.onload=e=>{var t=document.createElement("div");t.className="preview-image",t.style.backgroundImage=`url(${e.target.result})`,o.appendChild(t)},t.readAsDataURL(e)})},a.onclick=()=>{var e=document.getElementById("visitDate").value,t=document.getElementById("locationName").value,a=document.getElementById("visitDesc").value,n=Array.from(o.children).map(e=>e.style.backgroundImage.slice(5,-2));e&&t?(this.addLocation({date:e,name:t,description:a,images:n,timestamp:(new Date).getTime()}),i.style.display="none"):alert("请填写日期和地点")}}addLocation(e){e.id=Date.now().toString(),e.lng=this.currentMarker.lng,e.lat=this.currentMarker.lat,this.mapData.push(e),localStorage.setItem("mapData",JSON.stringify(this.mapData));let t=new BMap.Point(e.lng,e.lat);var a=new BMap.Marker(t);let n=new BMap.InfoWindow(this.createInfoWindowContent(e));a.addEventListener("click",()=>{this.map.openInfoWindow(n,t)}),this.map.addOverlay(a),this.updateStats()}deleteLocation(t){var e;confirm("确定要删除这个地点吗？")&&-1<(e=this.mapData.findIndex(e=>e.id===t))&&(this.mapData.splice(e,1),localStorage.setItem("mapData",JSON.stringify(this.mapData)),this.map.clearOverlays(),this.renderMarkers(),this.updateStats())}updateStats(){document.getElementById("visitedCount").textContent=this.mapData.length;var e=this.mapData.reduce((e,t)=>e+(t.images?t.images.length:0),0);document.getElementById("memoryCount").textContent=e}showLargeImage(e){let t=document.createElement("div");t.className="image-view-modal",t.innerHTML=`
+            <div class="image-view-content">
+                <span class="close-btn">&times;</span>
+                <img src="${e}" alt="照片">
+            </div>
+        `,document.body.appendChild(t),t.querySelector(".close-btn").onclick=()=>t.remove(),t.onclick=e=>{e.target===t&&t.remove()}}}document.addEventListener("DOMContentLoaded",()=>{new MapManager}),window.deleteLocation=e=>{window.mapManager.deleteLocation(e)},window.showLargeImage=e=>{window.mapManager.showLargeImage(e)};

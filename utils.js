@@ -1,0 +1,9 @@
+class Utils{static formatDate(e,t="YYYY-MM-DD"){var a=e.getFullYear(),r=String(e.getMonth()+1).padStart(2,"0"),e=String(e.getDate()).padStart(2,"0");return t.replace("YYYY",a).replace("MM",r).replace("DD",e)}static storage={set(e,t){try{localStorage.setItem(e,JSON.stringify(t))}catch(e){console.error("存储数据失败:",e)}},get(e,t=null){try{var a=localStorage.getItem(e);return a?JSON.parse(a):t}catch(e){return console.error("读取数据失败:",e),t}},remove(e){localStorage.removeItem(e)}};static createModal(e){let t=document.createElement("div");return t.className="modal",t.innerHTML=`
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h3>${e.title}</h3>
+                <div class="modal-body">
+                    ${e.content}
+                </div>
+            </div>
+        `,t.querySelector(".close-btn").onclick=()=>t.remove(),t.onclick=e=>{e.target===t&&t.remove()},document.body.appendChild(t),t}static handleImage(l,c=1048576){return new Promise((n,e)=>{var t;l.size>c?((t=new FileReader).onload=e=>{let o=new Image;o.onload=()=>{var e=document.createElement("canvas"),t=o.width,a=o.height,r=Math.sqrt(c/l.size);a*=r,e.width=t*=r,e.height=a,e.getContext("2d").drawImage(o,0,0,t,a),e.toBlob(e=>{n(e)},l.type,.9)},o.src=e.target.result},t.readAsDataURL(l)):n(l)})}static showError(e,t=3e3){let a=document.createElement("div");a.className="error-message",a.textContent=e,document.body.appendChild(a),setTimeout(()=>{a.remove()},t)}static loading={show(){var e=document.createElement("div");e.className="loading",e.innerHTML='<div class="spinner"></div>',document.body.appendChild(e)},hide(){var e=document.querySelector(".loading");e&&e.remove()}}}
