@@ -30,7 +30,7 @@ class TimeManager {
         if (this.updateIntervalId) {
             clearInterval(this.updateIntervalId);
         }
-        this.updateIntervalId = setInterval(() => this.updateTime(), CONFIG.UPDATE_INTERVAL);
+        this.updateIntervalId = setInterval(() => this.updateTime(), 1000);
     }
 
     stopUpdating() {
@@ -41,7 +41,7 @@ class TimeManager {
     }
 
     calculateTimeDifference(timestamp) {
-        const difference = timestamp - this.startTimestamp;
+        const difference = Math.max(0, timestamp - this.startTimestamp);
         return {
             days: Math.floor(difference / (1000 * 60 * 60 * 24)),
             hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
@@ -61,13 +61,35 @@ class TimeManager {
 
             // 计算下一个纪念日
             const nextAnniversary = this.calculateNextAnniversary(now);
-            const remaining = this.calculateTimeDifference(nextAnniversary.getTime());
+            const remaining = this.calculateRemainingTime(nextAnniversary);
             this.updateRemainingTime(remaining);
 
         } catch (error) {
             console.error('更新时间失败:', error);
             this.handleError(error);
         }
+    }
+
+    calculateNextAnniversary(now) {
+        const currentYear = now.getFullYear();
+        const anniversaryThisYear = new Date(currentYear, 0, 29); // 1月29日
+
+        // 如果今年的纪念日已经过了，计算明年的
+        if (now > anniversaryThisYear) {
+            return new Date(currentYear + 1, 0, 29);
+        }
+        return anniversaryThisYear;
+    }
+
+    calculateRemainingTime(targetDate) {
+        const now = new Date();
+        const difference = Math.max(0, targetDate.getTime() - now.getTime());
+
+        return {
+            days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+            hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+            minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
+        };
     }
 
     updateElapsedTime(time) {
@@ -78,14 +100,11 @@ class TimeManager {
             seconds: document.getElementById('seconds')
         };
 
-        // 使用批量更新减少重排重绘
-        requestAnimationFrame(() => {
-            for (const [key, element] of Object.entries(elements)) {
-                if (element) {
-                    element.textContent = time[key];
-                }
+        for (const [key, element] of Object.entries(elements)) {
+            if (element) {
+                element.textContent = String(time[key]).padStart(2, '0');
             }
-        });
+        }
     }
 
     updateRemainingTime(time) {
@@ -95,56 +114,40 @@ class TimeManager {
             nextMinutes: document.getElementById('nextMinutes')
         };
 
-        requestAnimationFrame(() => {
-            for (const [key, element] of Object.entries(elements)) {
-                if (element) {
-                    element.textContent = time[key];
-                }
+        for (const [key, element] of Object.entries(elements)) {
+            if (element) {
+                const value = time[key.replace('next', '').toLowerCase()];
+                element.textContent = String(value).padStart(2, '0');
             }
-        });
-    }
-
-    calculateNextAnniversary(currentDate) {
-        const currentYear = currentDate.getFullYear();
-        let nextAnniversary = new Date(currentYear, 0, 29); // 1月29日
-
-        if (currentDate > nextAnniversary) {
-            nextAnniversary.setFullYear(currentYear + 1);
         }
-
-        return nextAnniversary;
     }
 
     handleError(error) {
-        // 添加错误处理UI
         const errorMessage = document.createElement('div');
         errorMessage.className = 'error-message';
         errorMessage.textContent = '时间更新出现错误，请刷新页面重试';
         document.body.appendChild(errorMessage);
 
-        // 停止更新
         this.stopUpdating();
 
-        // 3秒后移除错误消息
         setTimeout(() => {
             errorMessage.remove();
         }, 3000);
     }
 }
 
-// 页面加载完成后初始化
+// 初始化
 document.addEventListener('DOMContentLoaded', () => {
-    new TimeManager(CONFIG.START_DATE);
+    window.timeManager = new TimeManager('2024-01-29');
 });
 
-// 页面不可见时停止更新，可见时恢复更新
+// 页面可见性控制
 document.addEventListener('visibilitychange', () => {
-    const timeManager = window.timeManager;
-    if (timeManager) {
+    if (window.timeManager) {
         if (document.hidden) {
-            timeManager.stopUpdating();
+            window.timeManager.stopUpdating();
         } else {
-            timeManager.startUpdating();
+            window.timeManager.startUpdating();
         }
     }
 }); 

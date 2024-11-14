@@ -1,1 +1,21 @@
- 
+# 构建输出
+dist/
+build/
+
+# 依赖
+node_modules/
+
+# IDE 文件
+.vscode/
+.idea/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 环境变量
+.env
+.env.local
+
+# 日志文件
+*.log 
