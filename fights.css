@@ -1,0 +1,235 @@
+.fights-container {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 20px;
+}
+
+.fights-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.add-fight-btn {
+    background: #ff6b6b;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.fights-timeline {
+    position: relative;
+}
+
+.fights-timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: #ff6b6b;
+}
+
+.fight-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: calc(50% - 30px);
+    margin-left: auto;
+}
+
+.fight-card:nth-child(even) {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+.fight-date {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+.fight-reason {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.fight-solution {
+    color: #666;
+    font-style: italic;
+}
+
+.fight-status {
+    margin-top: 15px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    display: inline-block;
+    font-size: 0.9em;
+}
+
+.status-resolved {
+    background: #e6ffe6;
+    color: #28a745;
+}
+
+.status-ongoing {
+    background: #fff3e6;
+    color: #fd7e14;
+}
+
+.fight-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.fight-modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.fight-form {
+    margin-top: 20px;
+}
+
+.fight-input {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.fight-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.delete-fight-btn {
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0 5px;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.delete-fight-btn:hover {
+    opacity: 1;
+}
+
+.image-upload {
+    margin: 15px 0;
+}
+
+.upload-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #ff6b6b;
+    color: white;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.upload-label input {
+    display: none;
+}
+
+.image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.preview-image {
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+}
+
+.fight-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.fight-image {
+    width: 120px;
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.fight-image:hover {
+    transform: scale(1.05);
+}
+
+.image-view-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100;
+}
+
+.image-view-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
+}
+
+.image-view-content img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 8px;
+}
+
+.image-view-content .close-btn {
+    position: absolute;
+    right: -30px;
+    top: -30px;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+} 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日历 - 我们的纪念日</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="calendar.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Our Memory</div>
+            <ul class="nav-links">
+                <li><a href="index.html">主页</a></li>
+                <li><a href="calendar.html" class="active">日历</a></li>
+                <li><a href="memory.html">美好回忆</a></li>
+                <li><a href="photos.html">照片墙</a></li>
+                <li><a href="fights.html">吵架记录</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <h1>我们的纪念日历</h1>
+            <div class="calendar-controls">
+                <button id="prevMonth">&lt;</button>
+                <h2 id="currentMonth">2024年 3月</h2>
+                <button id="nextMonth">&gt;</button>
+            </div>
+        </div>
+        <div class="calendar-grid">
+            <div class="calendar-weekdays">
+                <div>日</div><div>一</div><div>二</div><div>三</div>
+                <div>四</div><div>五</div><div>六</div>
+            </div>
+            <div id="calendarDays" class="calendar-days"></div>
+        </div>
+        
+        <!-- 事件详情弹窗 -->
+        <div id="eventModal" class="event-modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h3 id="selectedDate"></h3>
+                <div class="date-info">
+                    <p>农历：<span id="lunarDate"></span></p>
+                    <p>节气：<span id="solarTerm"></span></p>
+                    <p>节日：<span id="festivals"></span></p>
+                </div>
+                <div class="events-list">
+                    <h4>我们的记事</h4>
+                    <div id="eventsList"></div>
+                    <button id="addEvent" class="add-event-btn">添加新日子</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="calendar.js"></script>
+    <script src="lunar.js"></script>
+    <script src="cursor.js"></script>
+</body>
+</html> 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>照片墙 - 我们的纪念日</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="photos.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Our Memory</div>
+            <ul class="nav-links">
+                <li><a href="index.html">主页</a></li>
+                <li><a href="calendar.html">日历</a></li>
+                <li><a href="memory.html">美好回忆</a></li>
+                <li><a href="photos.html" class="active">照片墙</a></li>
+                <li><a href="fights.html">吵架记录</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="photos-container">
+        <div class="photos-header">
+            <h1>我们的照片墙</h1>
+            <button id="uploadPhoto" class="upload-btn">上传照片</button>
+        </div>
+        <div class="photo-filters">
+            <button class="filter-btn active">全部</button>
+            <button class="filter-btn">2024</button>
+            <button class="filter-btn">旅行</button>
+            <button class="filter-btn">日常</button>
+        </div>
+        <div class="photo-grid">
+            <!-- 照片网格将通过JavaScript动态生成 -->
+        </div>
+    </div>
+    <script src="photos.js"></script>
+    <script src="cursor.js"></script>
+</body>
+</html> 
