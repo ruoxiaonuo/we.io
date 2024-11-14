@@ -1,0 +1,32 @@
+.github-config-form {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.form-help {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+.form-help i {
+    margin-right: 4px;
+} 
