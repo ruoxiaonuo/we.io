@@ -1,1 +1,0 @@
-document.addEventListener("mousemove",function(e){let t=document.createElement("div");t.className="cursor-heart",t.style.left=e.pageX+"px",t.style.top=e.pageY+"px";e=["#ff6b6b","#ff8787","#ffa5a5","#ff4f4f","#ff3434"];t.style.color=e[Math.floor(Math.random()*e.length)],document.body.appendChild(t),t.addEventListener("animationend",function(){t.remove()})});
